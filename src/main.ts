@@ -5,6 +5,7 @@ import {
   joinVoiceChannel,
   createAudioPlayer,
   createAudioResource,
+  AudioPlayerStatus,
 } from "@discordjs/voice";
 const { join } = require("path");
 
@@ -36,7 +37,15 @@ client.on("messageCreate", async (msg) => {
     }
   } else if (msg.content == "!disconnect") {
     connection.destroy();
+    connection = undefined;
   } else if (msg.content == "!play") {
+    let playing: number = 0;
+    player.on(AudioPlayerStatus.Playing, () => {
+      playing += 1;
+      if (playing == 1) {
+        msg.reply("เล่นเพลงอยู่");
+      }
+    });
     if (connection == undefined) {
       connection = con(msg);
     }
