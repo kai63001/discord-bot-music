@@ -54,7 +54,7 @@ const play = (msg: any) => {
   if (!msg.member?.voice.channel) {
     msg.reply("JOIN ห้อง ก่อนไอ้สัส");
   } else {
-    if (_connection == undefined) {
+    if (msg?.guild?.voice?.cannel == undefined) {
       connection(msg);
     }
     const resource = createAudioResource(join(__dirname, "test.mp3"));
