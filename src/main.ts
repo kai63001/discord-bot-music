@@ -18,14 +18,14 @@ client.once("ready", () => {
 });
 
 client.on("messageCreate", async (msg: any) => {
-  switch (msg.content) {
-    case "!join":
+  switch (true) {
+    case msg.content == "!join":
       joinServer(msg);
       break;
-    case "!disconnect":
+    case msg.content == "!disconnect":
       dis();
       break;
-    case "!play":
+    case /!play/gm.test(msg.content):
       play(msg);
       break;
     default:
