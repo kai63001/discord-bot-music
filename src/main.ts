@@ -1,9 +1,15 @@
 import { Client, Intents } from "discord.js";
 require("dotenv").config();
-import { joinVoiceChannel, getVoiceConnection } from "@discordjs/voice";
+import {
+  joinVoiceChannel,
+  createAudioPlayer,
+  createAudioResource,
+} from "@discordjs/voice";
+const { join } = require('path');
 
 const token = process.env.TOKEN;
-
+let connection: any;
+const player = createAudioPlayer();
 const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
@@ -25,13 +31,19 @@ client.on("messageCreate", async (msg) => {
     if (!msg.member?.voice.channel) {
       msg.reply("JOIN ห้อง ก่อนไอ้สัส");
     } else {
-      const connection: any = joinVoiceChannel({
+      connection = joinVoiceChannel({
         channelId: msg.member?.voice.channel?.id as string,
         guildId: msg.member?.guild.id as string,
         // @ts-ignore: Unreachable code error
         adapterCreator: msg.channel.guild.voiceAdapterCreator,
       });
     }
+  } else if (msg.content == "!disconnect") {
+    connection.destroy();
+  } else if (msg.content == "!play") {
+    const resource = createAudioResource(join(__dirname, 'test.mp3'));
+    player.play(resource);
+    const subscribe = connection.subscribe(player);
   }
 });
 
