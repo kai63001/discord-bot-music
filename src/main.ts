@@ -1,8 +1,7 @@
 import { Client, Intents } from "discord.js";
-import { connection as con } from "@components/connect";
+import { connection as con } from "@components/lib";
 require("dotenv").config();
 import {
-  joinVoiceChannel,
   createAudioPlayer,
   createAudioResource,
   AudioPlayerStatus,
