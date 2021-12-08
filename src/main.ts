@@ -1,11 +1,12 @@
 import { Client, Intents } from "discord.js";
+import { connection as con } from "@components/connect";
 require("dotenv").config();
 import {
   joinVoiceChannel,
   createAudioPlayer,
   createAudioResource,
 } from "@discordjs/voice";
-const { join } = require('path');
+const { join } = require("path");
 
 const token = process.env.TOKEN;
 let connection: any;
@@ -31,17 +32,15 @@ client.on("messageCreate", async (msg) => {
     if (!msg.member?.voice.channel) {
       msg.reply("JOIN ห้อง ก่อนไอ้สัส");
     } else {
-      connection = joinVoiceChannel({
-        channelId: msg.member?.voice.channel?.id as string,
-        guildId: msg.member?.guild.id as string,
-        // @ts-ignore: Unreachable code error
-        adapterCreator: msg.channel.guild.voiceAdapterCreator,
-      });
+      connection = con(msg);
     }
   } else if (msg.content == "!disconnect") {
     connection.destroy();
   } else if (msg.content == "!play") {
-    const resource = createAudioResource(join(__dirname, 'test.mp3'));
+    if (connection == undefined) {
+      connection = con(msg);
+    }
+    const resource = createAudioResource(join(__dirname, "test.mp3"));
     player.play(resource);
     const subscribe = connection.subscribe(player);
   }
