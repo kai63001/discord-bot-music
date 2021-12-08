@@ -1,4 +1,16 @@
 import { joinVoiceChannel } from "@discordjs/voice";
+import { Client, Intents } from "discord.js";
+
+const client = () => {
+  return new Client({
+    intents: [
+      Intents.FLAGS.GUILDS,
+      Intents.FLAGS.GUILD_MEMBERS,
+      Intents.FLAGS.GUILD_MESSAGES,
+      Intents.FLAGS.GUILD_VOICE_STATES,
+    ],
+  });
+};
 
 const connection = (msg: any) => {
   return joinVoiceChannel({
@@ -9,4 +21,4 @@ const connection = (msg: any) => {
   });
 };
 
-export { connection };
+export { client, connection };

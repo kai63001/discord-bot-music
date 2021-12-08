@@ -1,5 +1,5 @@
 import { Client, Intents } from "discord.js";
-import { connection as con } from "@components/lib";
+import { connection as con, client as cli } from "@components/lib";
 require("dotenv").config();
 import {
   createAudioPlayer,
@@ -11,20 +11,13 @@ const { join } = require("path");
 const token = process.env.TOKEN;
 let connection: any;
 const player = createAudioPlayer();
-const client = new Client({
-  intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MEMBERS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_VOICE_STATES,
-  ],
-});
+const client = cli();
 
 client.once("ready", () => {
   console.log("ready");
 });
 
-client.on("messageCreate", async (msg) => {
+client.on("messageCreate", async (msg:any) => {
   switch (msg.content) {
     case "!join":
       if (!msg.member?.voice.channel) {
