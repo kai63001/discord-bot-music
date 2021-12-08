@@ -3,6 +3,7 @@ import {
   client as cli,
   disconnect as dis,
   play,
+  joinServer,
 } from "@components/lib";
 require("dotenv").config();
 
@@ -19,11 +20,7 @@ client.once("ready", () => {
 client.on("messageCreate", async (msg: any) => {
   switch (msg.content) {
     case "!join":
-      if (!msg.member?.voice.channel) {
-        msg.reply("JOIN ห้อง ก่อนไอ้สัส");
-      } else {
-        con(msg);
-      }
+      joinServer(msg);
       break;
     case "!disconnect":
       dis();

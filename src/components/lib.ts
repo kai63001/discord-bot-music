@@ -30,6 +30,14 @@ const connection = (msg: any) => {
   });
 };
 
+const joinServer = (msg: any) => {
+  if (!msg.member?.voice.channel) {
+    msg.reply("JOIN ห้อง ก่อนไอ้สัส");
+  } else {
+    connection(msg);
+  }
+};
+
 const disconnect = () => {
   _connection.destroy();
   _connection = undefined;
@@ -55,4 +63,4 @@ const play = (msg: any) => {
   }
 };
 
-export { client, connection, disconnect, play };
+export { client, connection, disconnect, play, joinServer };
