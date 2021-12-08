@@ -15,9 +15,13 @@ const client = cli();
 
 client.once("ready", () => {
   console.log("ready");
+  // @ts-ignore: Unreachable code error
+  client.user.setActivity("MUSIC | !help", {
+    type: "PLAYING",
+  });
 });
 
-client.on("messageCreate", async (msg:any) => {
+client.on("messageCreate", async (msg: any) => {
   switch (msg.content) {
     case "!join":
       if (!msg.member?.voice.channel) {
@@ -29,6 +33,7 @@ client.on("messageCreate", async (msg:any) => {
     case "!disconnect":
       connection.destroy();
       connection = undefined;
+      break;
     case "!play":
       let playing: number = 0;
       player.on(AudioPlayerStatus.Playing, () => {
@@ -37,12 +42,17 @@ client.on("messageCreate", async (msg:any) => {
           msg.reply("เล่นเพลงอยู่");
         }
       });
-      if (connection == undefined) {
-        connection = con(msg);
+      if (!msg.member?.voice.channel) {
+        msg.reply("JOIN ห้อง ก่อนไอ้สัส");
+      } else {
+        if (connection == undefined) {
+          connection = con(msg);
+        }
+        const resource = createAudioResource(join(__dirname, "test.mp3"));
+        player.play(resource);
+        const subscribe = connection.subscribe(player);
       }
-      const resource = createAudioResource(join(__dirname, "test.mp3"));
-      player.play(resource);
-      const subscribe = connection.subscribe(player);
+      break;
     default:
       break;
   }
