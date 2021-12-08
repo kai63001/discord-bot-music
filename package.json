@@ -19,8 +19,10 @@
   },
   "homepage": "https://github.com/kai63001/discord-bot-music#readme",
   "dependencies": {
+    "@discordjs/voice": "^0.7.5",
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
+    "libsodium-wrappers": "^0.7.9",
     "tsconfig-paths": "^3.12.0"
   },
   "devDependencies": {
