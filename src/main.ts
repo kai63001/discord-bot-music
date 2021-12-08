@@ -26,32 +26,33 @@ client.once("ready", () => {
 });
 
 client.on("messageCreate", async (msg) => {
-  if (msg.content == "ปราม") {
-    console.log(msg);
-    msg.reply("ควย นัท");
-  } else if (msg.content == "!join") {
-    if (!msg.member?.voice.channel) {
-      msg.reply("JOIN ห้อง ก่อนไอ้สัส");
-    } else {
-      connection = con(msg);
-    }
-  } else if (msg.content == "!disconnect") {
-    connection.destroy();
-    connection = undefined;
-  } else if (msg.content == "!play") {
-    let playing: number = 0;
-    player.on(AudioPlayerStatus.Playing, () => {
-      playing += 1;
-      if (playing == 1) {
-        msg.reply("เล่นเพลงอยู่");
+  switch (msg.content) {
+    case "!join":
+      if (!msg.member?.voice.channel) {
+        msg.reply("JOIN ห้อง ก่อนไอ้สัส");
+      } else {
+        connection = con(msg);
       }
-    });
-    if (connection == undefined) {
-      connection = con(msg);
-    }
-    const resource = createAudioResource(join(__dirname, "test.mp3"));
-    player.play(resource);
-    const subscribe = connection.subscribe(player);
+      break;
+    case "!disconnect":
+      connection.destroy();
+      connection = undefined;
+    case "!play":
+      let playing: number = 0;
+      player.on(AudioPlayerStatus.Playing, () => {
+        playing += 1;
+        if (playing == 1) {
+          msg.reply("เล่นเพลงอยู่");
+        }
+      });
+      if (connection == undefined) {
+        connection = con(msg);
+      }
+      const resource = createAudioResource(join(__dirname, "test.mp3"));
+      player.play(resource);
+      const subscribe = connection.subscribe(player);
+    default:
+      break;
   }
 });
 
