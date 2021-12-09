@@ -1,4 +1,4 @@
-# discord-youtube-music-bot
+# discord-youtube-music-bot (BETA VERSION)
 
 Discord youtube music bot make for enducation
 
@@ -17,7 +17,7 @@ npm i && npm i -g ts-node
 #set env
 touch .env
 
-#infile .env
+#in file .env
 TOKEN=XXXXXXXXXXXXXXX(discord token)
 YOUTUBE_API=XXXXXXXXXXXXXXX(youtube api v3 token)
 
