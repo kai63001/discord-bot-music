@@ -14,7 +14,7 @@ const search = async (msg: any) => {
   const uri = `${baseURL}/search?part=snippet&q=${encodeURIComponent(
     link
   )}&key=${process.env.YOUTUBE_API}`;
-  console.log(uri);
+  // console.log(uri);
   const data = await axios.get(uri);
   return data.data;
 };
