@@ -57,7 +57,7 @@ const play = (msg: any) => {
     if (msg?.guild?.voice?.cannel == undefined) {
       connection(msg);
     }
-    const resource = createAudioResource(join(__dirname, "test.mp4"));
+    const resource = createAudioResource(join(__dirname, "test.mp3"));
     player.play(resource);
     const subscribe = _connection.subscribe(player);
   }

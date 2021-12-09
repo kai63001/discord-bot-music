@@ -1,0 +1,3 @@
+const youtube = () => {};
+
+export { youtube };
