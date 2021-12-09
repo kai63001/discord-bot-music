@@ -58,8 +58,6 @@ const play = async (msg: any) => {
       connection(msg);
     }
     const path = await youtube(msg);
-    console.log(path);
-    console.log(path[path.length - 1].url)
     const resource = await createAudioResource(path[path.length - 1].url);
     player.play(resource);
     const subscribe = _connection.subscribe(player);
