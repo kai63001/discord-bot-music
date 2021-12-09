@@ -25,8 +25,8 @@ client.on("messageCreate", async (msg: any) => {
     case msg.content == "!disconnect":
       dis();
       break;
-    case /!play/gm.test(msg.content):
-      play(msg);
+    case msg.content.indexOf("!play") == 0:
+      const letplay = play(msg);
       break;
     default:
       break;

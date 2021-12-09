@@ -53,16 +53,26 @@ const play = async (msg: any) => {
   });
   if (!msg.member?.voice.channel) {
     msg.reply("JOIN ห้อง ก่อนไอ้สัส");
+    return;
   } else {
+    if (msg.content.replace(/!play/g, "").trim().length == 0) {
+      msg.reply("จะให้เล่นอะไรวะครับ !play ชื่อเพลง ไม่ก็ link");
+      return;
+    }
     if (msg?.guild?.voice?.cannel == undefined) {
       connection(msg);
     }
-    const path = await youtube(msg);
-    console.log(path)
-    const resource = await createAudioResource(path[1].url);
-    player.play(resource);
-    const subscribe = _connection.subscribe(player);
+    if (msg.content.indexOf("youtube.com") >= 0) {
+      const path = await youtube(msg);
+      // console.log(path)
+      const resource = await createAudioResource(path[1].url);
+      player.play(resource);
+      const subscribe = _connection.subscribe(player);
+    } else {
+      msg.reply("ยังไม่ได้ทำใจเย็นๆ");
+    }
   }
+  return;
 };
 
 function sleep(ms: number | undefined) {
