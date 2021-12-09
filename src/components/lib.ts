@@ -5,10 +5,10 @@ import {
   joinVoiceChannel,
 } from "@discordjs/voice";
 import { Client, Intents } from "discord.js";
+import { youtube } from "@components/youtube";
 
 let _connection: any;
 const player = createAudioPlayer();
-const { join } = require("path");
 
 const client = () => {
   return new Client({
@@ -43,7 +43,7 @@ const disconnect = () => {
   _connection = undefined;
 };
 
-const play = (msg: any) => {
+const play = async (msg: any) => {
   let playing: number = 0;
   player.on(AudioPlayerStatus.Playing, () => {
     playing += 1;
@@ -57,10 +57,19 @@ const play = (msg: any) => {
     if (msg?.guild?.voice?.cannel == undefined) {
       connection(msg);
     }
-    const resource = createAudioResource(join(__dirname, "test.mp3"));
+    const path = await youtube(msg);
+    console.log(path);
+    console.log(path[path.length - 1].url)
+    const resource = await createAudioResource(path[path.length - 1].url);
     player.play(resource);
     const subscribe = _connection.subscribe(player);
   }
 };
+
+function sleep(ms: number | undefined) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 
 export { client, connection, disconnect, play, joinServer };
