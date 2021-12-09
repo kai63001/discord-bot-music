@@ -5,7 +5,7 @@ import {
   joinVoiceChannel,
 } from "@discordjs/voice";
 import { Client, Intents } from "discord.js";
-import { youtube } from "@components/youtube";
+import { youtube, search, youtubeBySearch } from "@components/youtube";
 
 let _connection: any;
 const player = createAudioPlayer();
@@ -69,7 +69,12 @@ const play = async (msg: any) => {
       player.play(resource);
       const subscribe = _connection.subscribe(player);
     } else {
-      msg.reply("ยังไม่ได้ทำใจเย็นๆ");
+      const searched = await search(msg);
+      console.log(searched.items[0].id.videoId);
+      const path = await youtubeBySearch(searched.items[0].id.videoId);
+      const resource = await createAudioResource(path[1].url);
+      player.play(resource);
+      const subscribe = _connection.subscribe(player);
     }
   }
   return;
