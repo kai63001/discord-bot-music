@@ -54,13 +54,6 @@ const disconnect = () => {
 };
 
 const play = async (msg: any) => {
-  // let playing: number = 0;
-  // player.on(AudioPlayerStatus.Playing, () => {
-  //   playing += 1;
-  //   if (playing == 1) {
-  //     msg.reply("เล่นเพลงอยู่");
-  //   }
-  // });
   if (!msg.member?.voice.channel) {
     const user = msg.mentions.users.first() || msg.author;
     const embed = new MessageEmbed()
@@ -118,10 +111,5 @@ const play = async (msg: any) => {
   return;
 };
 
-function sleep(ms: number | undefined) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
 
 export { client, connection, disconnect, play, joinServer };
