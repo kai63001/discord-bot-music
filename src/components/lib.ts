@@ -80,10 +80,19 @@ const play = async (msg: any) => {
       const subscribe = _connection.subscribe(player);
     } else {
       const searched = await search(msg);
-      console.log(searched.items[0].id.videoId);
+      // console.log(searched.items[0].id.videoId);
+      console.log(searched.items[0].snippet.thumbnails);
       const path = await youtubeBySearch(searched.items[0].id.videoId);
       const resource = await createAudioResource(path[1].url);
       player.play(resource);
+      const user = msg.mentions.users.first() || msg.author;
+      const embed = new MessageEmbed()
+        .setTitle(`Playing : ${searched.items[0].snippet.title}`)
+        .setAuthor(user.username, user.avatarURL())
+        .setImage(searched.items[0].snippet.thumbnails.medium.url)
+        .setURL(`https://www.youtube.com/watch?v=${searched.items[0].id.videoId}`)
+        .setColor("RANDOM");
+      msg.reply({ embeds: [embed] });
       const subscribe = _connection.subscribe(player);
     }
   }

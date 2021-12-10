@@ -16,6 +16,7 @@ const search = async (msg: any) => {
   )}&key=${process.env.YOUTUBE_API}`;
   // console.log(uri);
   const data = await axios.get(uri);
+  
   return data.data;
 };
 
