@@ -5,7 +5,12 @@ import {
   joinVoiceChannel,
 } from "@discordjs/voice";
 import { Client, Intents, MessageEmbed } from "discord.js";
-import { youtube, search, youtubeBySearch } from "@components/youtube";
+import {
+  youtube,
+  search,
+  youtubeBySearch,
+  searchById,
+} from "@components/youtube";
 
 let _connection: any;
 const player = createAudioPlayer();
@@ -73,10 +78,22 @@ const play = async (msg: any) => {
       connection(msg);
     }
     if (msg.content.indexOf("youtube.com") >= 0) {
+      const searched = await searchById(msg);
+      // console.log(searched);
       const path = await youtube(msg);
       // console.log(path)
       const resource = await createAudioResource(path[1].url);
       player.play(resource);
+      const user = msg.mentions.users.first() || msg.author;
+      const embed = new MessageEmbed()
+        .setTitle(`Playing : ${searched.items[0].snippet.title}`)
+        .setAuthor(user.username, user.avatarURL())
+        .setImage(searched.items[0].snippet.thumbnails.medium.url)
+        .setURL(
+          `https://www.youtube.com/watch?v=${searched.items[0].id.videoId}`
+        )
+        .setColor("RANDOM");
+      msg.reply({ embeds: [embed] });
       const subscribe = _connection.subscribe(player);
     } else {
       const searched = await search(msg);
@@ -90,7 +107,9 @@ const play = async (msg: any) => {
         .setTitle(`Playing : ${searched.items[0].snippet.title}`)
         .setAuthor(user.username, user.avatarURL())
         .setImage(searched.items[0].snippet.thumbnails.medium.url)
-        .setURL(`https://www.youtube.com/watch?v=${searched.items[0].id.videoId}`)
+        .setURL(
+          `https://www.youtube.com/watch?v=${searched.items[0].id.videoId}`
+        )
         .setColor("RANDOM");
       msg.reply({ embeds: [embed] });
       const subscribe = _connection.subscribe(player);
