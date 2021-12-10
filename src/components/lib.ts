@@ -4,7 +4,7 @@ import {
   createAudioResource,
   joinVoiceChannel,
 } from "@discordjs/voice";
-import { Client, Intents } from "discord.js";
+import { Client, Intents, MessageEmbed } from "discord.js";
 import { youtube, search, youtubeBySearch } from "@components/youtube";
 
 let _connection: any;
@@ -32,7 +32,12 @@ const connection = (msg: any) => {
 
 const joinServer = (msg: any) => {
   if (!msg.member?.voice.channel) {
-    msg.reply("JOIN ห้อง ก่อนไอ้สัส");
+    const user = msg.mentions.users.first() || msg.author;
+    const embed = new MessageEmbed()
+      .setTitle("You should join channel first.")
+      .setAuthor(user.username, user.avatarURL())
+      .setColor("RANDOM");
+    msg.reply({ embeds: [embed] });
   } else {
     connection(msg);
   }
@@ -44,19 +49,24 @@ const disconnect = () => {
 };
 
 const play = async (msg: any) => {
-  let playing: number = 0;
-  player.on(AudioPlayerStatus.Playing, () => {
-    playing += 1;
-    if (playing == 1) {
-      msg.reply("เล่นเพลงอยู่");
-    }
-  });
+  // let playing: number = 0;
+  // player.on(AudioPlayerStatus.Playing, () => {
+  //   playing += 1;
+  //   if (playing == 1) {
+  //     msg.reply("เล่นเพลงอยู่");
+  //   }
+  // });
   if (!msg.member?.voice.channel) {
-    msg.reply("JOIN ห้อง ก่อนไอ้สัส");
+    const user = msg.mentions.users.first() || msg.author;
+    const embed = new MessageEmbed()
+      .setTitle("You should join channel first.")
+      .setAuthor(user.username, user.avatarURL())
+      .setColor("RANDOM");
+    msg.reply({ embeds: [embed] });
     return;
   } else {
     if (msg.content.replace(/!play/g, "").trim().length == 0) {
-      msg.reply("จะให้เล่นอะไรวะครับ !play ชื่อเพลง ไม่ก็ link");
+      msg.reply("!help");
       return;
     }
     if (msg?.guild?.voice?.cannel == undefined) {
