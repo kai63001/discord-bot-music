@@ -5,7 +5,8 @@
   "main": "main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only ./src/main.ts"
+    "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only ./src/main.ts",
+    "start": "ts-node -r tsconfig-paths/register --transpile-only ./src/main.ts"
   },
   "repository": {
     "type": "git",
