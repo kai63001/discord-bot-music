@@ -11,4 +11,13 @@ const messagePlaying = (msg: any, searched: any) => {
   msg.reply({ embeds: [embed] });
 };
 
-export { messagePlaying };
+const messageJoinFirst = (msg: any) => {
+  const user = msg.mentions.users.first() || msg.author;
+  const embed = new MessageEmbed()
+    .setTitle("You should voice join channel first.")
+    .setAuthor(user.username, user.avatarURL())
+    .setColor("RANDOM");
+  msg.reply({ embeds: [embed] });
+};
+
+export { messagePlaying,messageJoinFirst };

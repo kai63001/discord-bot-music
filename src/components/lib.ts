@@ -11,7 +11,7 @@ import {
   youtubeBySearch,
   searchById,
 } from "@components/youtube";
-import { messagePlaying } from "@components/message";
+import { messagePlaying, messageJoinFirst } from "@components/message";
 
 let _connection: any;
 const player = createAudioPlayer();
@@ -38,12 +38,7 @@ const connection = (msg: any) => {
 
 const joinServer = (msg: any) => {
   if (!msg.member?.voice.channel) {
-    const user = msg.mentions.users.first() || msg.author;
-    const embed = new MessageEmbed()
-      .setTitle("You should join channel first.")
-      .setAuthor(user.username, user.avatarURL())
-      .setColor("RANDOM");
-    msg.reply({ embeds: [embed] });
+    messageJoinFirst(msg);
   } else {
     connection(msg);
   }
@@ -56,12 +51,7 @@ const disconnect = () => {
 
 const play = async (msg: any) => {
   if (!msg.member?.voice.channel) {
-    const user = msg.mentions.users.first() || msg.author;
-    const embed = new MessageEmbed()
-      .setTitle("You should join channel first.")
-      .setAuthor(user.username, user.avatarURL())
-      .setColor("RANDOM");
-    msg.reply({ embeds: [embed] });
+    messageJoinFirst(msg);
     return;
   } else {
     if (msg.content.replace(/!play/g, "").trim().length == 0) {
