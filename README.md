@@ -11,16 +11,16 @@ git clone https://github.com/kai63001/discord-youtube-music-bot
 # move to the cloned repo
 cd discord-youtube-music-bot
 
-#install package
+# install package
 npm i && npm i -g ts-node
 
-#set env
+# create file .env
 touch .env
 
-#in file .env
+# in file .env
 TOKEN=XXXXXXXXXXXXXXX(discord token)
 YOUTUBE_API=XXXXXXXXXXXXXXX(youtube api v3 token)
 
-#run application
+# run application
 npm start
 </pre>
