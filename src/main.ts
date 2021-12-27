@@ -5,6 +5,7 @@ import {
   play,
   joinServer,
 } from "@components/lib";
+import {helpMePls} from "@components/message"
 require("dotenv").config();
 
 const client = cli();
@@ -29,7 +30,7 @@ client.on("messageCreate", async (msg: any) => {
       const letplay = play(msg);
       break;
     case msg.content == "!!help":
-      msg.reply("!play <song name> or <URL>")
+      helpMePls(msg);
 
     default:
       break;

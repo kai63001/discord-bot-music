@@ -20,4 +20,13 @@ const messageJoinFirst = (msg: any) => {
   msg.reply({ embeds: [embed] });
 };
 
-export { messagePlaying,messageJoinFirst };
+const helpMePls = (msg:any) =>{
+  const embed = new MessageEmbed()
+    .setTitle("Command for use bot")
+    .setAuthor('Songzy Bot','https://cdn.discordapp.com/app-icons/918046670216921120/dce904972f2d68139922c3e9d78f36c9.png?size=1024')
+    .setDescription("!play <song name> or <URL>")
+    .setColor("RANDOM");
+  msg.reply({ embeds: [embed] });
+}
+
+export { messagePlaying,messageJoinFirst,helpMePls };
