@@ -28,6 +28,9 @@ client.on("messageCreate", async (msg: any) => {
     case msg.content.indexOf("!play") == 0:
       const letplay = play(msg);
       break;
+    case msg.content == "!!help":
+      msg.reply("!play <song name> or <URL>")
+
     default:
       break;
   }
